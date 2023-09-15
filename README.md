@@ -44,6 +44,8 @@ for action_rule in action_rules:
     print(action_rule)
 ```
 
+## Example
+
 The Example (simplified Titanic data) [action-apriori](https://github.com/lukassykora/ar_apriori/blob/main/Action-Apriori%20Example.ipynb).
 
 ## Performance
