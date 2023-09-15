@@ -16,6 +16,16 @@ Download the script actionapriori.py and import it. Then the action_apriori func
 
 ```python
 import actionapriori
+import pandas as pd
+# Data
+transactions = {'Sex': ['M', 'F', 'M', 'M', 'F', 'M', 'F'], 
+                'Age': ['Y', 'Y', 'O', 'Y', 'Y', 'O', 'Y'],
+                'Class': [1, 1, 2, 2, 1, 1, 2],
+                'Embarked': ['S', 'C', 'S', 'C', 'S', 'C', 'C'],
+                'Survived': [1, 1, 0, 0, 1, 1, 0],
+               }
+data = pd.DataFrame.from_dict(transactions)
+# Parameters
 stable_attributes = ['Sex','Age']
 flexible_attributes = ['Class','Embarked']
 target = 'Survived'
@@ -26,7 +36,7 @@ min_unwanted_support = 1
 min_unwanted_confidence = 0.5 #min 0.5
 min_wanted_support = 2
 min_wanted_confidence = 0.5 #min 0.5
-
+# Action Rules Mining
 action_rules = actionapriori.action_apriori(
     data, 
     stable_attributes, 
@@ -40,6 +50,7 @@ action_rules = actionapriori.action_apriori(
     min_wanted_support, 
     min_wanted_confidence, 
     True) #verbose
+# Print rules
 for action_rule in action_rules:
     print(action_rule)
 ```
