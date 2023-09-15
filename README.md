@@ -16,8 +16,24 @@ Download the script actionapriori.py and import it. Then the action_apriori func
 
 ```python
 import actionapriori
-
-
+action_rules = actionapriori.action_apriori(
+    data, stable_attributes, 
+    flexible_attributes, 
+    target, 
+    wanted_change_in_target,
+     min_stable_attributes , 
+     min_flexible_attributes, 
+     min_unwanted_support, 
+     min_unwanted_confidence, 
+     min_wanted_support, 
+     min_wanted_confidence, 
+     True) #verbose
+for action_rule in action_rules:
+    print(action_rule)
 ```
 
-The algorithm [ar_apriori](https://github.com/lukassykora/ar_apriori/blob/main/ar_apriori-code.ipynb).
+The Example (simplified Titanic data) [action-apriori](https://github.com/lukassykora/ar_apriori/blob/main/Action-Apriori%20Example.ipynb).
+
+## Performance
+
+See [performance](https://github.com/lukassykora/ar_apriori/blob/main/Performance.ipynb) on full Titanic dataset.
