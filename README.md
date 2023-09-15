@@ -16,18 +16,30 @@ Download the script actionapriori.py and import it. Then the action_apriori func
 
 ```python
 import actionapriori
+stable_attributes = ['Sex','Age']
+flexible_attributes = ['Class','Embarked']
+target = 'Survived'
+wanted_change_in_target = [0, 1]
+min_stable_attributes = 2
+min_flexible_attributes = 1 #min 1
+min_unwanted_support = 1
+min_unwanted_confidence = 0.5 #min 0.5
+min_wanted_support = 2
+min_wanted_confidence = 0.5 #min 0.5
+
 action_rules = actionapriori.action_apriori(
-    data, stable_attributes, 
+    data, 
+    stable_attributes, 
     flexible_attributes, 
     target, 
     wanted_change_in_target,
-     min_stable_attributes , 
-     min_flexible_attributes, 
-     min_unwanted_support, 
-     min_unwanted_confidence, 
-     min_wanted_support, 
-     min_wanted_confidence, 
-     True) #verbose
+    min_stable_attributes , 
+    min_flexible_attributes, 
+    min_unwanted_support, 
+    min_unwanted_confidence, 
+    min_wanted_support, 
+    min_wanted_confidence, 
+    True) #verbose
 for action_rule in action_rules:
     print(action_rule)
 ```
