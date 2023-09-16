@@ -53,6 +53,15 @@ action_rules = actionapriori.action_apriori(
 # Print rules
 for action_rule in action_rules:
     print(action_rule)
+# Print rules with action rules notation
+for action_rule in action_rules:
+    print(actionapriori.get_ar_notation(action_rule, target))
+```
+
+The output: ation rule with notation:
+
+```python
+[(Sex: F) ∧ (Age: Y) ∧ (Class: 2 → 1)] ⇒ [Survived: 0 → 1], support of undesired part: 1, confidence of undesired part: 1.0, support of desired part: 2, confidence of desired part: 1.0
 ```
 
 ## Example

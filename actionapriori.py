@@ -286,3 +286,22 @@ def action_apriori(data, stable_attributes, flexible_attributes, target, wanted_
         candidates_queue += new_candidates
     generate_action_rules(classification_rules, action_rules)
     return action_rules
+
+def get_ar_notation(ar_dict, target):
+    rule = '['
+    for i, item  in enumerate(ar_dict['unwanted']['itemset']):
+        if i > 0:
+            rule += ' ∧ '
+        rule += '('
+        if item == ar_dict['wanted']['itemset'][i]:
+            val = item.split('_<item>_')
+            rule += str(val[0]) + ': ' + str(val[1])
+        else:
+            val = item.split('_<item>_')
+            val_wanted = ar_dict['wanted']['itemset'][i].split('_<item>_')
+            rule += str(val[0]) + ': ' + str(val[1]) + ' → ' + str(val_wanted[1])
+        rule += ')'
+    rule += '] ⇒ [' + str(target) + ': ' + str(ar_dict['unwanted']['target']) + ' → ' + str(ar_dict['wanted']['target']) + ']'
+    rule += ', support of undesired part: ' + str(ar_dict['unwanted']['support']) + ', confidence of undesired part: ' + str(ar_dict['unwanted']['confidence'])
+    rule += ', support of desired part: ' + str(ar_dict['wanted']['support']) + ', confidence of desired part: ' + str(ar_dict['wanted']['confidence']) 
+    return rule
