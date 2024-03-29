@@ -220,6 +220,16 @@ def get_bindings(data, stable_attributes, flexible_attributes, target):
             target_items_binding[target].append(col) 
     return stable_items_binding, flexible_items_binding, target_items_binding
 
+def get_bindings_apriori(data, attributes):
+    items_binding = defaultdict(lambda: [])
+
+    for col in data.columns:
+        is_continue = False
+        # stable
+        for attribute in attributes:
+            items_binding[attribute].append(col)
+    return items_binding
+
 # Create default stop list
 def get_stop_list(stable_items_binding, flexible_items_binding):
     stop_list = []
@@ -228,6 +238,13 @@ def get_stop_list(stable_items_binding, flexible_items_binding):
             stop_list.append(tuple(stop_couple))
     for item in flexible_items_binding.keys():
         stop_list.append(tuple([item, item]))
+    return stop_list
+
+def get_stop_list_apriori(items_binding):
+    stop_list = []
+    for items in items_binding.values():
+        for stop_couple in itertools.product(items, repeat=2):
+            stop_list.append(tuple(stop_couple))
     return stop_list
 
 # Split data to desired and undesired
@@ -283,6 +300,32 @@ def action_apriori(data, stable_attributes, flexible_attributes, target, wanted_
             K+=1
             prune_tree(K, classification_rules, stop_list)
         new_candidates = generate_candidates(**candidate, stop_list=stop_list, frames=frames, unwanted_state=unwanted_state, wanted_state=wanted_state, stop_list_itemset=stop_list_itemset, classification_rules=classification_rules, verbose=verbose)
+        candidates_queue += new_candidates
+    generate_action_rules(classification_rules, action_rules)
+    return action_rules
+
+
+def apriori(data, min_support_l, attributes, verbose=False):
+    # Global variables
+    global min_support
+    min_support = min_support_l
+
+    data = pd.get_dummies(data, sparse=False, columns=data.columns, prefix_sep='_<item>_')
+    items_binding = get_bindings_apriori(data, attributes)
+    stop_list = get_stop_list_apriori(items_binding)
+    rules = []
+    stop_list_itemset = []
+
+    candidates_queue = [{
+        'itemset_prefix': tuple(),
+        'items_binding': items_binding,
+    }]
+    K = 0
+    while len(candidates_queue) > 0:
+        candidate = candidates_queue.pop(0)
+        if len(candidate['ar_prefix']) > K:
+            K += 1
+        new_candidates = generate_candidates_apriori(**candidate, stop_list=stop_list, frames=data, verbose=verbose)
         candidates_queue += new_candidates
     generate_action_rules(classification_rules, action_rules)
     return action_rules
