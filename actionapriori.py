@@ -73,7 +73,6 @@ def generate_candidates(ar_prefix, itemset_prefix, stable_items_binding, flexibl
             undesired_support = branch_undesired_mask.sum().item()
             desired_support = branch_desired_mask.sum().item()
 
-            # if verbose and undesired_support != 0:
             if verbose:
                 print('SUPPORT')
                 print(itemset_prefix + (idx2col[item],))
