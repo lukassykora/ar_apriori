@@ -71,3 +71,21 @@ The Example (simplified Titanic data) [action-apriori](https://github.com/lukass
 ## Performance
 
 See [performance](https://github.com/lukassykora/ar_apriori/blob/main/Performance.ipynb) on full Titanic dataset.
+
+## Torch Version
+
+The original actionapriori script uses Pandas as a backend for most computations. A new implementation is available:
+
+actionapriori_torch.py
+
+In this version, the Pandas DataFrame is replaced by PyTorch tensors.
+
+Additionally, it requires the following libraries:
+
+PyTorch (version 2.5.1)
+CUDA (version 12.1)
+
+This new script introduces one additional parameter: use_cuda (boolean), which selects the computation device. If use_cuda=False, the CPU is used; if use_cuda=True, the GPU (CUDA) is used.
+All other parameters remain unchanged, including the input parameter data, which must be provided as a Pandas DataFrame.
+
+This PyTorch implementation significantly reduces runtime while preserving identical results.
